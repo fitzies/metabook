@@ -13,11 +13,11 @@ import Create from "./Create";
 
 const Nav = () => {
   const navs = [
-    ["Home", <FaHome className="w-5 h-5" />],
-    ["Explore", <FaHashtag className="w-5 h-5" />],
-    ["Profile", <FaUserCircle className="w-5 h-5" />],
-    ["Create", <FaPlusSquare className="w-5 h-5" />],
-    ["Settings", <FaCog className="w-5 h-5" />],
+    ["Home", <FaHome key={2} className="w-5 h-5" />],
+    ["Explore", <FaHashtag key={3} className="w-5 h-5" />],
+    ["Profile", <FaUserCircle key={4} className="w-5 h-5" />],
+    ["Create", <FaPlusSquare key={5} className="w-5 h-5" />],
+    ["Settings", <FaCog key={6} className="w-5 h-5" />],
   ];
 
   const [isCreating, setIsCreating] = useState<boolean>(false);
@@ -36,7 +36,6 @@ const Nav = () => {
       <div className="w-1/4 h-screen border-r border-alt flex flex-col py-8 items-center gap-8 [&>*:nth-child(4)]:mt-auto fixed">
         {navs.map((item) => {
           const lowercase = item[0].toString().toLowerCase();
-
           return (
             <div
               key={lowercase}
@@ -44,9 +43,11 @@ const Nav = () => {
               onClick={() => openCreate(lowercase)}
             >
               {item[1]}
+              key={lowercase}
               <h1 className="font-interbold text-lg">{item[0]}</h1>
               {lowercase != "create" ? (
                 <Link
+                  key={lowercase}
                   className="absolute w-full h-full rounded-2xl"
                   href={`${lowercase != "home" ? lowercase : "/"}`}
                 />

@@ -8,10 +8,8 @@ export async function POST(request: Request) {
 
   const post = prisma.post
     .create({
-      //@ts-ignore
       data: {
         content: req.content,
-        published: true,
         authorId: req.authorId,
       },
     })

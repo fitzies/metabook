@@ -31,9 +31,9 @@ async function useConnectWallet(callback: Function) {
   }, []);
 }
 
-async function useGetUser(address: string, callback: Function) {
+async function useGetUser(id: string, callback: Function) {
   async function getUser() {
-    const res = await fetch(`${URL}/api/users/${address}`);
+    const res = await fetch(`${URL}/api/users/id/${id}`);
     return res.json();
   }
 
@@ -57,20 +57,17 @@ async function useGetPosts(callback: Function) {
   }, []);
 }
 
-async function useCreatePost(post: { content: string; authorId: string }) {
-  const res = await fetch(`${URL}/api/users/`, {
+async function createPost(post: { content: string; authorId: string }) {
+  await fetch(`${URL}/api/posts/create/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
       content: post.content,
-      published: true,
       authorId: post.authorId,
     }),
   });
-
-  return res.json();
 }
 
-export { useConnectWallet, useGetUser, useGetPosts, useCreatePost };
+export { useConnectWallet, useGetUser, useGetPosts, createPost };

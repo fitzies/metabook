@@ -1,18 +1,28 @@
 "use client";
 
-import { useCreatePost } from "@/lib/hooks";
+import { createPost } from "@/lib/hooks";
 import Button from "./Button";
 import { useState } from "react";
 
 const Create = (props: { onClose: Function }) => {
+  async function getUserWithAddress() {
+    const address = localStorage.getItem("address");
+    const res = await fetch(
+      `http://localhost:3000/api/users/address/${address}`
+    );
+    return res;
+  }
+
   const onSubmit = () => {
-    const res = fetch(
-      `${URL}/api/users/${localStorage.getItem("address")}`
-    ).then((res) => {
-      console.log(res);
-      useCreatePost({ content: text, authorId: res.address });
-      props.onClose();
-    });
+    getUserWithAddress().then((res) =>
+      res.json().then((res) => {
+        console.log(res);
+        createPost({ content: text, authorId: res.id }).then((res) => {
+          location.reload();
+        });
+      })
+    );
+    props.onClose();
   };
 
   const [text, setText] = useState<string>("");
